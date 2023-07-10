@@ -12,26 +12,27 @@ import time
 st.title('Welcome to Forecastor')
 
 # getting input from user
-stocks_name=["RELIANCE.NS","AAPL", "GOOG", "MSFT", "TSLA", "AMZN"]
+# stocks_name=["RELIANCE.NS","HDFCBANK.NS","TATAMOTORS.NS","AAPL", "GOOG", "MSFT", "TSLA", "AMZN"]
+
+stock_name=st.text_input('Enter Stock Name')
 
 # created select box so user can choose from it and also it will updated in user_data variable
-user_data=st.selectbox('Stocks Name',stocks_name,index=0)
+# user_data=st.selectbox('Stocks Name',stocks_name,index=0)
 
 # get stock data from yfinance api
-ticker_data=yf.Ticker(user_data)
+ticker_data=yf.Ticker(stock_name)
 
 # then we are taking date time input from user 
-start_date=st.date_input('Enter start date',datetime.date.today())
+# start_date=st.date_input('Enter start date',datetime.date.today())
 end_date=st.date_input('Enter end date',datetime.date.today())
 
 # after geting user dates then i given to yfinance so it can import the data user want
-data=ticker_data.history(period='1d', start=start_date, end=end_date)
+data=ticker_data.history(period='1d', start='2013-01-01', end=end_date)
 
 data=data.reset_index()
 
 # we keep the main columns
 data=data[['Date','Open','High','Low','Close','Volume']]
-
 def get_data(data):
     x=st.write(data.describe(),data.shape)
     return x
